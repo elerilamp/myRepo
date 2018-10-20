@@ -1,0 +1,59 @@
+﻿!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+If you have file called 
+
+  user.csv
+
+Rename it (e.g. userOK.csv) so you avoid errors during import, because user is reserved word
+
+
+After data loaded, rename the tab directly in MS SQL server.
+
+
+Script will fail on empty files - delete them, there is no data to import.
+
+May also fail if the table with the name of the CSV file already exists in the database. Delete the table before running the script.
+
+
+If CSV data starts with empty cloumn (2nd line of CSV file starts with comma) script fails
+	
+	- solution: insert random text to the beginning of 2nd line and then delete that data from imported record manualy
+	
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Test CSVs encoding - use script below or external programs (Notepad++ etc.)
+If ASCII is detected, check that special characters (e.g. éíë) are saved in more than 1byte -
+if not, file have to be converted to UTF8, otherwise special characters will be lost
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+cd e:\MemosMigrations\_SharedScripts\NEW\ToInit_V8\Import\CSV
+. .\Get-FileEncoding.ps1
+Get-ChildItem  i:\InProgress\BayStreetAdvisors\1007952\ExportedData\*.csv | select FullName, @{n='Encoding';e={Get-FileEncoding $_.FullName}}
+
+
+---
+Steps to check and change encoding:
+Open your CSV in Notepad
+Choose Save As
+Check the Encoding at the bottom
+Choose UTF8
+Save
+---
+
+
+
+Command use case (dont forget to change parameter DBName)
+
+cd e:\MemosMigrations\_SharedScripts\NEW\ToInit_V8\Import\CSV
+. .\LoadCsvTosql.ps1
+LoadCsvTosql -Directory "i:\InProgress\BayStreetAdvisors\1007952\ExportedData\" -ServerName "WIN-N53LUO6QQ58\SQL14" -DBName "BSSrc"
+
+---
+For TAB delimiter USE following LoadCsvTosql_TAB instead of LoadCsvTosql
+
+cd e:\MemosMigrations\_SharedScripts\NEW\ToInit_V8\Import\CSV
+. .\LoadCsvTosql_TAB.ps1
+LoadCsvTosql_TAB -Directory "i:\InProgress\BayStreetAdvisors\1007952\ExportedData\" -ServerName "WIN-N53LUO6QQ58\SQL14" -DBName "BSSrc"
