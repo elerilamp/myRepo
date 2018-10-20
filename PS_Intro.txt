@@ -1,0 +1,10 @@
+PowerShell is a tool that's much more powerful than the Command Prompt . I n a way, it 's also intended to replace the Command Prompt , as it delivers more power and control over the Windows operating system.
+
+it's purpose is task automation and configuration management . This powerful shell is based on the .NET framework and it includes a command-line shell and a scripting language.
+
+you can execute commands as scripts without typing commands in individually for tedious administration tasks.
+
+hundreds of customizable commands, which are called cmdlets.
+
+e.g. if you are managing a large network of servers, you can automatically install updates and make changes with powershell instead of individually connecting to each server.
+it's supposed to be really fast too.
