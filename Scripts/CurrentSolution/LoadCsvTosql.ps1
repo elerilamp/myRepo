@@ -10,7 +10,7 @@ function LoadCsvTosql
     )  
   
  try {   
- 
+
  $startTime=(Get-Date); 
 
 	. .\Out-DataTable.ps1
@@ -26,7 +26,7 @@ function LoadCsvTosql
 		$table = [IO.Path]::GetFileNameWithoutExtension($i)
 
 		
-		Write-Host -NoNewLine  "Import in progress... $table"
+		Write-Host -NoNewLine  "x Import in progress... $table"
 
 		$dtemp = Import-Csv -Path $($Directory+$i) #- | Out-DataTable
 		

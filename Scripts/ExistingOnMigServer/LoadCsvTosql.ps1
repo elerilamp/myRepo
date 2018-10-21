@@ -1,7 +1,7 @@
 param (
 	[string]$Directory = "H:\InProgress\PowerShell_CSV\myRepo\SourceFilesCSV\", #required
-	[string]$CSVFileName = "_2_65MR_19C.csv",
-	[string]$DestTableName = "_2_65MR_19C_new",
+	[string]$CSVFileName = "_1MR_19C.csv",
+	[string]$DestTableName = "_1MR_19C_11",
 	[string]$DBName = "youCanDeleteThis",
 	[string]$ServerName = "localhost\SQL14"
 )

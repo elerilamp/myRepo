@@ -36,7 +36,7 @@ function Write-DataTable
     [Parameter(Position=7, Mandatory=$false)] [Int32]$QueryTimeout=0, 
     [Parameter(Position=8, Mandatory=$false)] [Int32]$ConnectionTimeout=15 
     ) 
-     
+
     $conn=new-object System.Data.SqlClient.SQLConnection 
  
     if ($Username) 

@@ -1,10 +1,60 @@
 PowerShell is a tool that's much more powerful than the Command Prompt . I n a way, it 's also intended to replace the Command Prompt , as it delivers more power and control over the Windows operating system.
 
-it's purpose is task automation and configuration management . This powerful shell is based on the .NET framework and it includes a command-line shell and a scripting language.
+It's purpose is task automation and configuration management . This powerful shell is based on the .NET framework and it includes a command-line shell and a scripting language.
 
-you can execute commands as scripts without typing commands in individually for tedious administration tasks.
+You can execute commands as scripts without typing commands in individually for tedious administration tasks.
 
-hundreds of customizable commands, which are called cmdlets.
+Hundreds of customizable commands, which are called cmdlets.
+Cmdlet is a lightweight command that is used in the PowerShell environment and it performs a single function. It's a command from a user to computer's OS or an application, such as: "show all my files", or "run this program". There are over 200 basic cmdlets included in PS. and you can write your own ones.
+It's a verb-noun pair.
+Each cmdlet has a help: 
+e.g Get-Help Copy-Item -Detailed
+
+example cmdlets:
+Get-Location - get the current directory
+Copy-Item - copy files
+Move-Item - move a file
+New-Item - creates a new empty file or directory
+Remove-Module -Name "CsvSqlimport"
+Get-ChildItem - Gets the files and folders in a file system drive.
+
 
 e.g. if you are managing a large network of servers, you can automatically install updates and make changes with powershell instead of individually connecting to each server.
 it's supposed to be really fast too.
+
+
+Scripts and modules
+what's the between .ps1 and .psm1?
+
+PS1 files are scripts, PSM1 files are script modules (related scripts)
+You load up a module with the Import-Module command, and it has some other advantages over scripts, such as the ability to keep some code internal while exporting other commands, to manage scoping of variables and aliases. Scripts, on the other hand, are just executed (or dot-sourced, if your intention is to load the contents of the script into your current session.)
+
+If you save the script as .psm1 then you can can use the module cmdlets such as Import-Module on it. So that you can easily install your code into other user's systems and manage scoping.
+You save the .psm1 file in a directory and you can also put any resources you need to run your script in that folder + a manifest file that describes how the module works.
+All functons in your .psm1 script will be accessible to all users who import your .psm1. but properties will not be.
+
+
+There are also binary modules(.ddls (binary modules  that contain compiled code such as c#), manifest moduels, dynamic modules.
+Dynamic modules are not loaded from or saved to a file. They are created dynamicaly by a script using the New-Module cmdlet
+
+Dot-Sourcing - to load your ps script into active memory (variables will be in scope). The variables will be maintained in your current session post-script execution.  show example.
+
+. .\scriptname.ps1
+
+cd E:\GIT\DataProjects\_SharedScripts\NEW\ToInit_V8\Import\CSV
+. .\LoadCsvTosql.ps1
+
+
+
+
+Chrissy solution - various problems with loading our existing csv files.
+Some work fine. 
+But e.g. fails for: trailing empty columns (Document.csv)
+apostropies such as Agnes O'Hara in row 167
+Can be fixed (hopefully)
+
+Currently inserts all text with quotes. can be fixed.
+
+some don't parese correctly, so can use -Safe option, but that's slower, as it uses OLEDB connection not streamreader. Runs too slowly.
+Turbo - uses tablelock, but has restrictions.works for certain data only.
+
