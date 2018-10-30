@@ -4,6 +4,16 @@ It's purpose is task automation and configuration management . This powerful she
 
 You can execute commands as scripts without typing commands in individually for tedious administration tasks.
 
+
+e.g. if you are managing a large network of servers, you can automatically install updates and make changes with powershell instead of individually connecting to each server.
+it's supposed to be really fast too.
+
+Windows Powershell ISE = integrated scripting environment
+
+Everything in Windows PowerShell is an object. $var = "Hello" is an object of type System.String. $var | Get-Member
+$svc = Get-Service
+$svc[0].name
+
 Hundreds of customizable commands, which are called cmdlets.
 Cmdlet is a lightweight command that is used in the PowerShell environment and it performs a single function. It's a command from a user to computer's OS or an application, such as: "show all my files", or "run this program". There are over 200 basic cmdlets included in PS. and you can write your own ones.
 It's a verb-noun pair.
@@ -18,10 +28,30 @@ New-Item - creates a new empty file or directory
 Remove-Module -Name "CsvSqlimport"
 Get-ChildItem - Gets the files and folders in a file system drive.
 
+https://docs.microsoft.com/en-us/previous-versions/technet-magazine/hh551144(v=msdn.10)
 
-e.g. if you are managing a large network of servers, you can automatically install updates and make changes with powershell instead of individually connecting to each server.
-it's supposed to be really fast too.
+if, do while, foreach,Switch, For constructions
 
+If ($this -eq $that) {
+  # commands
+} elseif ($those -ne $them) {
+  # commands
+} elseif ($we -gt $they) {
+  # commands
+} else {
+  # commands
+}
+
+
+Functions:
+
+function Mine {
+  Get-Service
+  Get-Process
+}
+Mine
+
+Functions can themselves contain other functions.
 
 Scripts and modules
 what's the between .ps1 and .psm1?
@@ -41,11 +71,50 @@ Dot-Sourcing - to load your ps script into active memory (variables will be in s
 
 . .\scriptname.ps1
 
+ .\script.ps1
+
+You can easily test this. Save the following as script.ps1:
+
+$answer="42"
+write-output "ultimate answer is $answer"
+Now see example execution:
+
+PS D:\temp> .\script.ps1
+ultimate answer is 42
+
+PS D:\temp> $answer
+
+PS D:\temp> . .\script.ps1
+ultimate answer is 42
+
+PS D:\temp> $answer
+42
+
 cd E:\GIT\DataProjects\_SharedScripts\NEW\ToInit_V8\Import\CSV
 . .\LoadCsvTosql.ps1
 
+Parameters are defined in a special way at the top of the script. You can precede this definition with comments, but it must otherwise be the first executable lines of code within the script. 
 
+param (
+  [string]$computername,
+  [string]$logfile,
+  [int]$attemptcount = 5
+)
 
+in Chrissy's example - this means the parameter after the Mandatory keyword is mandatory:
+
+	[Parameter(Mandatory=$true)]
+		[string]$SqlServer,
+
+To create a parameter set, I use the [Parameter(ParameterSetName='somename')] syntax.
+
+A PowerShell function can have different parameters depending on how it is called. This is called Parameter Sets. For example, Get-Process has a non mandatory parameter called Name which specifies which processes to Get by Name. But is also has a parameter called ID which also specifies which processes to get, this time by ID. Both parameters exists but are mutually exclusive, you cannot use them both at the same time, since they are defined in two different Parameter Sets.
+
+to view parameter sets:
+Get-Command Import-CsvToSql -Syntax
+
+CmdletBinding
+The CmdletBinding and the Parameter attribute turn a simple function into an advanced function, thereby adding features that are common in cmdlets. H
 
 Chrissy solution - various problems with loading our existing csv files.
 Some work fine. 
